@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WM Assistant</title>
+    <link rel="stylesheet" href="styles.css?v=13">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="description" content="WM Assistant - Your intelligent waste management service assistant">
+    <meta name="theme-color" content="#006341">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo">
+                        <img src="https://www.wm.com/content/dam/wm/icons/branding/wm-logo-web-header-footer.svg" alt="WM" class="header-logo" />
+                        <span>Meet WM Assistant</span>
+                    </div>
+                    <p class="header-subtitle" id="dynamicSubtitle">Loading...</p>
+                </div>
+                <div class="header-actions">
+                    <div class="address-indicator" id="addressIndicator" style="display: none;">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="addressText"></span>
+                        <button class="change-address-btn" id="changeAddressBtn">Change</button>
+                    </div>
+                    <button class="action-btn" id="reloadSession" title="Reload Session" aria-label="Reload Session">
+                        <i class="fas fa-refresh"></i>
+                    </button>
+                    <button class="action-btn" id="seedData" title="Reload Demo Data" aria-label="Reload Demo Data">
+                        <i class="fas fa-database"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <div class="messages-container" 
+                 id="messages" 
+                 role="log" 
+                 aria-live="polite" 
+                 aria-label="Chat messages">
+                <div class="message assistant">
+                    <div class="message-avatar">
+                        <img
+                            class="avatar-logo"
+                            src="https://www.wm.com/content/dam/wm/icons/branding/wm-logo-web-header-footer.svg"
+                            alt="WM"
+                            aria-hidden="true"
+                        />
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            Hello! I'm your WM Assistant. How can I help you today? Try asking about your service status.
+                        </div>
+                        <div class="message-timestamp">
+                            <span class="timestamp">Just now</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Suggestion Chips -->
+        <div class="suggestions-container" id="suggestions">
+            <div class="suggestion-chips">
+                <button class="suggestion-chip" data-message="What is my service status?">
+                    <i class="fas fa-info-circle"></i>
+                    Service Status
+                </button>
+                <button class="suggestion-chip" data-message="Change my container size">
+                    <i class="fas fa-exchange-alt"></i>
+                    Change Size
+                </button>
+                <button class="suggestion-chip" data-message="Add recycling service">
+                    <i class="fas fa-recycle"></i>
+                    Add Recycling
+                </button>
+                <button class="suggestion-chip" data-message="Schedule bulk pickup">
+                    <i class="fas fa-truck"></i>
+                    Bulk Pickup
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        placeholder="Ask me anything about your waste management services..."
+                        maxlength="500"
+                        autocomplete="off"
+                        spellcheck="true"
+                        aria-label="Type your message"
+                        aria-describedby="input-hint charCount"
+                    >
+                    <button id="sendButton" class="send-button" disabled aria-label="Send message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="input-hint" id="input-hint">Press Enter to send, Shift+Enter for new line</span>
+                    <span class="character-count" id="charCount">0/500</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Error Toast -->
+        <div class="error-toast" id="errorToast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="toast-message"></span>
+                <button class="toast-close" aria-label="Close error message">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Version Indicator -->
+        <div class="version-indicator">v8</div>
+        
+        <!-- Address Modal -->
+        <div class="modal-overlay" id="addressModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Set Your Service Address</h3>
+                    <button class="modal-close" id="closeAddressModal" aria-label="Close modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please provide your service address to get personalized assistance:</p>
+                    <input 
+                        type="text" 
+                        id="addressInput" 
+                        placeholder="Enter your address..."
+                        aria-label="Service address"
+                    >
+                    <div class="modal-actions">
+                        <button class="btn-secondary" id="cancelAddress">Cancel</button>
+                        <button class="btn-primary" id="saveAddress">Save Address</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="main.js?v=17"></script>
+</body>
+</html>

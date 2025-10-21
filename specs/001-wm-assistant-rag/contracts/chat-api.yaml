@@ -1,0 +1,263 @@
+openapi: 3.0.3
+info:
+  title: WM Assistant Chat API
+  description: API for WM Assistant AI chatbot interactions
+  version: 1.0.0
+  contact:
+    name: WM Assistant Team
+    email: support@wm.com
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.wm.com/assistant
+    description: Production server
+
+paths:
+  /api/chat:
+    post:
+      summary: Submit a chat message
+      description: Send a customer query to the WM Assistant and receive a response
+      operationId: submitChatMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+            examples:
+              moving_query:
+                summary: Moving service transfer query
+                value:
+                  session_id: "550e8400-e29b-41d4-a716-446655440000"
+                  message: "How do I transfer my service when moving?"
+                  context: "Previous conversation about moving"
+              billing_query:
+                summary: Billing question
+                value:
+                  session_id: "550e8400-e29b-41d4-a716-446655440001"
+                  message: "How can I view my current bill?"
+                  context: null
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+              examples:
+                successful_response:
+                  summary: Successful chat response
+                  value:
+                    response_id: "660e8400-e29b-41d4-a716-446655440000"
+                    query_id: "770e8400-e29b-41d4-a716-446655440000"
+                    content: "To transfer your WM service when moving, you'll need to provide your moving date, new address, and preferred service start date. You can transfer your service online through My WM..."
+                    sources: ["moving-transfer-service", "service-changes-overview"]
+                    urls: ["https://www.wm.com/us/en/support/faqs/service-questions/im-moving-what-do-i-need-to-do-with-my-service"]
+                    confidence_score: 0.95
+                    response_time_ms: 1250
+                    timestamp: "2024-10-20T14:30:00Z"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/health:
+    get:
+      summary: Health check
+      description: Check the health status of the WM Assistant service
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                healthy:
+                  summary: Healthy service
+                  value:
+                    status: "healthy"
+                    timestamp: "2024-10-20T14:30:00Z"
+                    version: "1.0.0"
+                    uptime_seconds: 86400
+                    support_database_entries: 150
+                    vector_db_status: "ready"
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - session_id
+        - message
+      properties:
+        session_id:
+          type: string
+          format: uuid
+          description: Unique session identifier
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        message:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Customer's question or message
+          example: "How do I transfer my service when moving?"
+        context:
+          type: string
+          nullable: true
+          description: Previous conversation context
+          example: "Previous conversation about moving"
+
+    ChatResponse:
+      type: object
+      required:
+        - response_id
+        - query_id
+        - content
+        - sources
+        - urls
+        - confidence_score
+        - response_time_ms
+        - timestamp
+      properties:
+        response_id:
+          type: string
+          format: uuid
+          description: Unique response identifier
+          example: "660e8400-e29b-41d4-a716-446655440000"
+        query_id:
+          type: string
+          format: uuid
+          description: Original query identifier
+          example: "770e8400-e29b-41d4-a716-446655440000"
+        content:
+          type: string
+          description: Generated response content
+          example: "To transfer your WM service when moving, you'll need to provide your moving date, new address, and preferred service start date."
+        sources:
+          type: array
+          items:
+            type: string
+          description: IDs of support entries used
+          example: ["moving-transfer-service", "service-changes-overview"]
+        urls:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: URLs found in response content
+          example: ["https://www.wm.com/us/en/support/faqs/service-questions/im-moving-what-do-i-need-to-do-with-my-service"]
+        confidence_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence in response accuracy
+          example: 0.95
+        response_time_ms:
+          type: integer
+          minimum: 0
+          description: Response generation time in milliseconds
+          example: 1250
+        timestamp:
+          type: string
+          format: date-time
+          description: Response generation timestamp
+          example: "2024-10-20T14:30:00Z"
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - version
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy, degraded]
+          description: Service health status
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          description: Health check timestamp
+          example: "2024-10-20T14:30:00Z"
+        version:
+          type: string
+          description: Service version
+          example: "1.0.0"
+        uptime_seconds:
+          type: integer
+          description: Service uptime in seconds
+          example: 86400
+        support_database_entries:
+          type: integer
+          description: Number of support database entries
+          example: 150
+        vector_db_status:
+          type: string
+          enum: [ready, loading, error]
+          description: Vector database status
+          example: "ready"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+        - timestamp
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "validation_error"
+        message:
+          type: string
+          description: Error message
+          example: "Invalid request format"
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+          example: "2024-10-20T14:30:00Z"
+        details:
+          type: object
+          description: Additional error details
+          example: {"field": "message", "issue": "too_long"}
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: chat
+    description: Chat interaction endpoints
+  - name: health
+    description: Health and status endpoints
