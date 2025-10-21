@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: wm-assistant
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd backend && python main.py
+    envVars:
+      - key: OPENAI_API_KEY
+        value: your_openai_api_key_here
+    healthCheckPath: /api/health
