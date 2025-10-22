@@ -161,6 +161,13 @@ RESPONSE FORMAT:
 CONTEXT INFORMATION:
 {context}
 
+ENHANCED RESPONSE GUIDELINES:
+- Use action_links when available to provide clickable URLs (e.g., My WM, Request Help, Schedule & ETA)
+- Reference policy_notes to ensure accurate, compliant responses
+- Consider geo_scope and audience when providing location-specific information
+- Use entities and alt_questions to better understand user intent
+- Include relevant action_links naturally in your response
+
 FOLLOW-UP QUESTION EXAMPLES:
 - "Would you like me to explain more about [specific aspect]?"
 - "Do you have questions about [related topic]?"

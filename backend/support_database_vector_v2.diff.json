@@ -1,0 +1,321 @@
+{
+  "summary": {
+    "old_path": "/mnt/data/support_database_vector.json",
+    "new_path": "/mnt/data/support_database_vector_v2.json",
+    "old_count": 19,
+    "new_count": 19,
+    "added_entries": [],
+    "removed_entries": [],
+    "changed_substantive": [
+      "missed-pickup-general",
+      "yard-waste-service"
+    ],
+    "changed_schema_only": [
+      "access-ads-invoices",
+      "autopay-enrollment",
+      "compactors-available",
+      "container-damaged",
+      "container-size-change",
+      "contamination-charges",
+      "dumpster-materials-not-allowed",
+      "energy-surcharge",
+      "moving-transfer-service",
+      "overage-charges",
+      "pandemic-precautions",
+      "portable-toilets",
+      "pricing-structure-transition",
+      "recycling-guidelines-general",
+      "request-invoice-quickly",
+      "service-schedule-lookup",
+      "temporary-service-hold"
+    ],
+    "added_fields_global": [
+      "action_links",
+      "alt_questions",
+      "audience",
+      "entities",
+      "geo_scope",
+      "last_reviewed",
+      "policy_notes",
+      "source_id"
+    ],
+    "removed_fields_global": []
+  },
+  "per_item_changes": {
+    "access-ads-invoices": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "autopay-enrollment": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "compactors-available": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "container-damaged": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "container-size-change": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "contamination-charges": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "dumpster-materials-not-allowed": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "energy-surcharge": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "missed-pickup-general": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": [
+        "content",
+        "keywords",
+        "url"
+      ]
+    },
+    "moving-transfer-service": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "overage-charges": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "pandemic-precautions": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "portable-toilets": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "pricing-structure-transition": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "recycling-guidelines-general": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "request-invoice-quickly": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "service-schedule-lookup": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "temporary-service-hold": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": []
+    },
+    "yard-waste-service": {
+      "added_keys": [
+        "action_links",
+        "alt_questions",
+        "audience",
+        "entities",
+        "geo_scope",
+        "last_reviewed",
+        "policy_notes",
+        "source_id"
+      ],
+      "removed_keys": [],
+      "modified_keys": [
+        "category",
+        "content",
+        "keywords",
+        "url"
+      ]
+    }
+  }
+}

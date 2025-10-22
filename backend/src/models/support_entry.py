@@ -2,7 +2,7 @@
 Support database entry model.
 """
 from datetime import datetime
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Dict
 from pydantic import BaseModel, Field, validator
 
 
@@ -18,6 +18,16 @@ class SupportEntry(BaseModel):
     embedding: Optional[List[float]] = Field(None, description="Vector embedding for semantic search")
     created_at: datetime = Field(default_factory=datetime.utcnow, description="When entry was created")
     updated_at: datetime = Field(default_factory=datetime.utcnow, description="When entry was last updated")
+    
+    # New V2 fields
+    source_id: Optional[str] = Field(None, description="Source identifier for the content")
+    last_reviewed: Optional[str] = Field(None, description="Date when content was last reviewed")
+    geo_scope: Optional[str] = Field(None, description="Geographic scope of applicability")
+    audience: Optional[List[str]] = Field(None, description="Target audience for the content")
+    entities: Optional[List[str]] = Field(None, description="Key entities extracted from content")
+    alt_questions: Optional[List[str]] = Field(None, description="Alternative question formulations")
+    policy_notes: Optional[List[str]] = Field(None, description="Important policy guidelines")
+    action_links: Optional[Dict[str, str]] = Field(None, description="Structured action links")
     
     @validator('id')
     def validate_id(cls, v):
@@ -38,7 +48,8 @@ class SupportEntry(BaseModel):
         """Validate that category is one of the defined support categories."""
         valid_categories = {
             'Service Changes', 'Container Guidelines', 'Safety & Health',
-            'Additional Services', 'Billing', 'Service Issues', 'Recycling', 'Service Questions'
+            'Additional Services', 'Billing', 'Service Issues', 'Recycling', 'Service Questions',
+            'Products & Services'
         }
         if v not in valid_categories:
             raise ValueError(f'Category must be one of: {", ".join(valid_categories)}')

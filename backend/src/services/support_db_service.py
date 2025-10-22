@@ -84,7 +84,7 @@ class SupportDBService:
         return list(self._entries_by_category.keys())
     
     def search_entries(self, query: str, limit: int = 10) -> List[SupportEntry]:
-        """Search support entries by keywords and content."""
+        """Search support entries using enhanced V2 algorithm with entities, alt_questions, and action_links."""
         if not query or not query.strip():
             return []
         
@@ -98,26 +98,48 @@ class SupportDBService:
             
             # Check title (exact match gets highest score)
             if query_lower in entry.title.lower():
-                score += 5
+                score += 8
             else:
                 # Check for word matches in title
                 title_lower = entry.title.lower()
                 for word in query_words:
                     if word in title_lower:
-                        score += 2
+                        score += 3
             
             # Check keywords (exact match gets high score)
             for keyword in entry.keywords:
                 keyword_lower = keyword.lower()
                 if query_lower in keyword_lower or keyword_lower in query_lower:
-                    score += 4
+                    score += 6
                 else:
                     # Check for word matches in keywords
                     for word in query_words:
                         if word in keyword_lower:
-                            score += 2
+                            score += 3
             
-            # Check content (word matches)
+            # Check entities (new V2 field) - high priority
+            if hasattr(entry, 'entities') and entry.entities:
+                for entity in entry.entities:
+                    entity_lower = entity.lower()
+                    if query_lower in entity_lower or entity_lower in query_lower:
+                        score += 5
+                    else:
+                        for word in query_words:
+                            if word in entity_lower:
+                                score += 2
+            
+            # Check alt_questions (new V2 field) - medium priority
+            if hasattr(entry, 'alt_questions') and entry.alt_questions:
+                for alt_q in entry.alt_questions:
+                    alt_q_lower = alt_q.lower()
+                    if query_lower in alt_q_lower:
+                        score += 4
+                    else:
+                        for word in query_words:
+                            if word in alt_q_lower:
+                                score += 2
+            
+            # Check content (word matches) - lower priority
             content_lower = entry.content.lower()
             for word in query_words:
                 if word in content_lower:
