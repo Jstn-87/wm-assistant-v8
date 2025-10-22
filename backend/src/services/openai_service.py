@@ -78,19 +78,25 @@ class OpenAIService:
             if self.settings.openai_api_key == "test-key-for-development":
                 return self._generate_test_response(query, context, start_time)
             
+            # Build messages array with conversation history
+            messages = [{"role": "system", "content": prompt}]
+            
+            # Add conversation history if available
+            if conversation_history:
+                for msg in conversation_history[-6:]:  # Last 6 messages for context
+                    if msg.get("role") and msg.get("content"):
+                        messages.append({
+                            "role": msg["role"],
+                            "content": msg["content"]
+                        })
+            
+            # Add current user query
+            messages.append({"role": "user", "content": query})
+            
             # Make API call
             response = self.client.chat.completions.create(
                 model=self.settings.openai_model,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": prompt
-                    },
-                    {
-                        "role": "user", 
-                        "content": query
-                    }
-                ],
+                messages=messages,
                 max_tokens=self.settings.openai_max_tokens,
                 temperature=0.7
             )
@@ -117,6 +123,9 @@ class OpenAIService:
     def _build_prompt(self, query: str, context: str, conversation_history: Optional[List[Dict[str, str]]] = None) -> str:
         """Build the system prompt for OpenAI."""
         prompt = """You are the WM Assistant, an AI-powered customer support chatbot for Waste Management (WM). Your role is to provide helpful, accurate, and conversational responses to customer queries.
+
+CONVERSATION CONTEXT:
+You are having a conversation with a customer. Pay attention to the conversation history to understand context, especially when the customer gives short responses like "Yes", "No", "Sure", etc. These responses are usually answering your previous follow-up questions.
 
 CRITICAL RESPONSE GUIDELINES:
 1. You MUST only provide information that is contained in the provided context below
@@ -157,6 +166,12 @@ FOLLOW-UP QUESTION EXAMPLES:
 - "Do you have questions about [related topic]?"
 - "Is there anything else about [main topic] I can help with?"
 - "Would you like to know more about [alternative option]?"
+
+CONVERSATION CONTEXT HANDLING:
+- If the user responds with "Yes" to a follow-up question, provide the additional information they requested
+- If the user responds with "No" or similar, acknowledge and ask what else you can help with
+- If the user gives a short response like "Yes", "No", "Sure", etc., use the conversation history to understand what they're responding to
+- Always consider the previous conversation when interpreting short responses
 
 Remember: Only use information from the context above. If the context doesn't contain relevant information, politely explain that you don't have that specific information available."""
 
