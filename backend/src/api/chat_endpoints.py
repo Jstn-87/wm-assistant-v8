@@ -88,7 +88,7 @@ async def submit_chat_message(request: ChatRequest) -> ChatResponse:
                 # Build enhanced context with V2 metadata
                 context_entry = f"Title: {entry.title}\nContent: {entry.content}"
                 
-                # Add action links if available
+                # Add action links prominently if available
                 if hasattr(entry, 'action_links') and entry.action_links:
                     action_links_text = []
                     for link_name, link_url in entry.action_links.items():
@@ -97,7 +97,7 @@ async def submit_chat_message(request: ChatRequest) -> ChatResponse:
                         else:
                             action_links_text.append(f"{link_name}: {link_url}")
                     if action_links_text:
-                        context_entry += f"\nAction Links: {', '.join(action_links_text)}"
+                        context_entry += f"\n\nIMPORTANT ACTION LINKS: {', '.join(action_links_text)}"
                 
                 # Add policy notes if available
                 if hasattr(entry, 'policy_notes') and entry.policy_notes:
