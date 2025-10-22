@@ -80,6 +80,6 @@ async def serve_static(path: str):
     return {"error": "File not found"}
 
 # Vercel serverless function handler
-def handler(request):
-    """Vercel serverless function handler."""
-    return app(request.scope, request.receive, request.send)
+from mangum import Mangum
+
+handler = Mangum(app)
